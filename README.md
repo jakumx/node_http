@@ -1,2 +1,9 @@
 # node_http
-node http server and unix commands
+
+`npm install`
+
+`node app.js`
+
+in other terminal
+
+`npm test`

@@ -15,6 +15,7 @@ describe('http request', function () {
 		var now = moment();
 		var after = moment(now).add(1, 's');
 		var count = 0;
+		var arryTimes = [];
 
 		async.during(
 		    function (callback) {
@@ -22,14 +23,19 @@ describe('http request', function () {
 		    },
 		    function (callback) {
 
-	    	httpRequest(function (err, response) {
-		        count++;
-		        setTimeout(callback, 0);
-			});
+		    	var startDate = moment();
+
+		    	httpRequest(function (err, response) {
+			        count++;
+			        var endDate = moment();
+			        arryTimes.push(endDate.diff(startDate, 'milliseconds'));
+			        setTimeout(callback, 0);
+				});
 
 		    },
 		    function (err) {
 		    	console.log('during count: ' + count);
+		    	console.log('prom: ' + prom(arryTimes) + 'ms');
 		        done();
 		    }
 		);
@@ -37,23 +43,28 @@ describe('http request', function () {
 	});
 
 	it('how many counts in one second with "whilst"', function (done) {
-		
+
 		var now = moment();
 		var after = moment(now).add(1, 's');
 		var count = 0;
+		var arryTimes = [];
 
 		async.whilst(
 			function () {
 				return moment() <= after;
 			}, function (callback) {
 				setTimeout(function() {
+					var startDate = moment();
 					httpRequest(function (err, response) {
 			        	count++;
+			        	var endDate = moment();
+			        	arryTimes.push(endDate.diff(startDate, 'milliseconds'));
 			        	callback(null, count);
 					});
 				},0);
 			}, function (err, n) {
-				console.log('whilst count: ' +  count);
+				console.log('\nwhilst count: ' +  count);
+		    	console.log('prom: ' + prom(arryTimes) + 'ms');
 				done();
 			}
 		);
@@ -62,3 +73,15 @@ describe('http request', function () {
 
 
 });
+
+function prom(arry) {
+
+	var count = 0;
+
+	arry.forEach(function (a) {
+		count += a;
+	});
+
+	return count/arry.length;
+
+}

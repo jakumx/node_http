@@ -23,11 +23,8 @@ module.exports = function () {
         }
 
     }).listen(8080);
-    
+
 }
-
-
-
 
 var funExec = function (command, callback) {
 

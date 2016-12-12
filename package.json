@@ -2,7 +2,7 @@
   "name": "node_http",
   "version": "0.0.1",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha"
+    "test": "./node_modules/mocha/bin/mocha -R progress"
   },
   "dependencies": {
     "async": "^2.1.4",

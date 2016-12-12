@@ -9,24 +9,17 @@ var httpRequest = function (callback) {
 	  path: '/exec'
 	};
 
-	var startDate = moment();
-
 	http.get(options, function(res) {
-	  	console.log("Got response: " + res.statusCode);
+	  	// console.log("Got response: " + res.statusCode);
 
 	 	res.on("data", function(chunk) {
-	    	console.log("BODY: " + chunk);
-	    	var endDate = moment();
-
-	    	var diffDate = endDate.diff(startDate, 'milliseconds')
-
-	    	console.log('ms: ' + diffDate);
+	    	// console.log("BODY: " + chunk);
 
 	    	callback(null, chunk);
 	  	});
 
 	}).on('error', function(e) {
-	 	console.log("Got error: " + e.message);
+	 	// console.log("Got error: " + e.message);
 	 	var endDate = moment();
 	 	callback(e.message, null);
 	});
